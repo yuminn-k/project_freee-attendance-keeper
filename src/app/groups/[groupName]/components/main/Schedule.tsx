@@ -57,7 +57,6 @@ const Schedule = ({ groupId }: { groupId: string }) => {
         scheduleName="Core-Time"
         time={`${coreTimeStart} ~ ${coreTimeEnd}`}
         onMoreVertClick={openModal}
-        managerRole={false}
       />
     </div>
   );

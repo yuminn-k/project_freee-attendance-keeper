@@ -1,9 +1,6 @@
-import {RoleProps} from '.';
-
-interface ScheduleCardProps extends RoleProps {
+interface ScheduleCardProps {
   scheduleName: string;
   time: string;
-  managerRole: boolean;
   onMoreVertClick: () => void;
 }
 

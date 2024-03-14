@@ -10,13 +10,12 @@ import { useGroup } from "@/src/contexts/GroupContext";
 const ClassMain = () => {
   const { groupId } = useGroup();
   const [groupInfo, setGroupInfo] = useState({ name: "", description: "" });
-  const [managerRole, setManagerRole] = useState<boolean>(true);
 
-  const classTab = managerRole ? "Member" : "";
+  const classTab = "Member";
   const tabs = ["Main", classTab];
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const tabMapping = {
-    Main: <Main groupId={groupId} managerRole={managerRole} />,
+    Main: <Main groupId={groupId} />,
     Member: <Member />,
   };
 
