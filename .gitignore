@@ -41,3 +41,5 @@ next-env.d.ts
 ### Firebase Patch ###
 .runtimeconfig.json
 .firebase/
+
+.env
