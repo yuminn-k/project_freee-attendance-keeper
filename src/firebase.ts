@@ -24,15 +24,14 @@ import { getFirestore } from "firebase/firestore";
 //   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 // };
 const firebaseConfig = {
-  apiKey: "AIzaSyCyuCkVW4zuwycBfRFqF06nz2Qx4vVzMJU",
-  authDomain: "freee-attendance-keeper.firebaseapp.com",
-  databaseURL:
-    "https://freee-attendance-keeper-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "freee-attendance-keeper",
-  storageBucket: "freee-attendance-keeper.appspot.com",
-  messagingSenderId: "325929904206",
-  appId: "1:325929904206:web:44976adffb950af63cfb1f",
-  measurementId: "G-ZZG1784HS3",
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_DATABASE_URL,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
