@@ -6,7 +6,24 @@ import MemberModal from "./MemberModal";
 
 interface SelectedMemberType {
   userId: string;
-  attendanceRecords: any;
+  attendanceRecords: {
+    [date: string]: {
+      attendanceTime: string;
+      leaveTime: string;
+      status: string;
+    };
+  };
+}
+
+interface UserData {
+  nickname: string | { email: string; nickname: string };
+  attendance: {
+    [date: string]: {
+      attendanceTime: string;
+      leaveTime: string;
+      status: string;
+    };
+  };
 }
 
 const Member = () => {
@@ -31,7 +48,6 @@ const Member = () => {
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
-    console.log("handleOut: clicked");
     const modalContainer = document.getElementById("modal-container");
     if (modalContainer && !modalContainer.contains(event.target as Node)) {
       onClose();
@@ -48,7 +64,6 @@ const Member = () => {
   const handleMemberClick = (userId: string) => {
     get(ref(db, `users/${userId}/attendance`)).then((snapshot) => {
       if (snapshot.exists()) {
-        console.log("clicked");
         const attendanceRecords = snapshot.val();
         setSelectedMember({ userId, attendanceRecords });
         openModal();
@@ -57,56 +72,45 @@ const Member = () => {
   };
 
   useEffect(() => {
-    const todayStr = new Date().toISOString().split("T")[0]; // 'YYYY-MM-DD'
-    const today = new Date(todayStr);
-    const usersRef = ref(db, "users");
-
-    get(usersRef).then((snapshot) => {
+    get(ref(db, "users")).then((snapshot) => {
       if (snapshot.exists()) {
         const usersData = snapshot.val();
-        const memberInfo = Object.keys(usersData).map((userId) => {
-          const userData = usersData[userId];
-          let nickname;
-          if (typeof userData.nickname === "string") {
-            nickname = userData.nickname;
-          } else if (
-            typeof userData.nickname === "object" &&
-            userData.nickname !== null
-          ) {
-            nickname =
-              userData.nickname.nickname || userData.nickname.email || userId;
-          } else {
-            nickname = userId;
-          }
-          const attendanceData = userData.attendance
-            ? userData.attendance[todayStr]
-            : {};
+        const memberInfo = Object.entries(usersData).map(
+          ([userId, userDataRaw]) => {
+            const userData: UserData = userDataRaw as UserData;
+            let nickname;
+            if (typeof userData.nickname === "string") {
+              nickname = userData.nickname;
+            } else if (
+              typeof userData.nickname === "object" &&
+              userData.nickname !== null
+            ) {
+              nickname =
+                userData.nickname.nickname || userData.nickname.email || userId;
+            } else {
+              nickname = userId;
+            }
 
-          let status = attendanceData.status || "休暇";
-          const vacationInfo = userData.vacation;
-          if (
-            vacationInfo &&
-            new Date(vacationInfo.start) <= today &&
-            today <= new Date(vacationInfo.end)
-          ) {
-            status = "休暇中";
-          }
+            // Calculate today's attendance data for the member card
+            const todayStr = new Date().toISOString().split("T")[0];
+            const attendanceToday = userData.attendance?.[todayStr] || {};
 
-          return {
-            userId,
-            postName: nickname,
-            attendanceTime: attendanceData.attendanceTime || "",
-            leaveTime: attendanceData.leaveTime || "",
-            status: status,
-          };
-        });
+            return {
+              userId,
+              postName: nickname,
+              attendanceTime: attendanceToday.attendanceTime || "",
+              leaveTime: attendanceToday.leaveTime || "",
+              status: attendanceToday.status || "休暇",
+            };
+          }
+        );
 
         setMemberData(memberInfo);
-
+        // Calculate statistics based on today's attendance
         const newStats = memberInfo.reduce(
           (acc, member) => {
             acc.total += 1;
-            if (member.status === "休暇中") {
+            if (member.status === "休暇") {
               acc.onLeave += 1;
             } else {
               if (member.attendanceTime && !member.leaveTime) acc.present += 1;
@@ -127,21 +131,21 @@ const Member = () => {
   const memberArray: MemberProps[] = [
     {
       userId: "1",
-      postName: "社員例1",
+      postName: "テスト社員例1",
       attendanceTime: "09:00",
       leaveTime: "18:00",
       status: "通常",
     },
     {
       userId: "2",
-      postName: "社員例2",
+      postName: "テスト社員例2",
       attendanceTime: "13:30",
       leaveTime: "18:00",
       status: "遅刻",
     },
     {
       userId: "3",
-      postName: "社員例3",
+      postName: "テスト社員例3",
       attendanceTime: "",
       leaveTime: "",
       status: "休暇",
@@ -149,29 +153,28 @@ const Member = () => {
   ];
   return (
     <>
-      <div className="flex justify-center mt-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="p-4 bg-blue-200 rounded-lg shadow">
+      <div className="flex flex-col justify-center mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl">
+          <div className="p-4 bg-blue-200 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
             <p className="text-lg font-semibold">総人数</p>
             <p className="text-2xl font-bold">{stats.total + 3}人</p>
           </div>
-          <div className="p-4 bg-green-200 rounded-lg shadow">
+          <div className="p-4 bg-green-200 shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
             <p className="text-lg font-semibold">出勤</p>
             <p className="text-2xl font-bold">{stats.present + 1}人</p>
           </div>
-          <div className="p-4 bg-yellow-200 rounded-lg shadow">
+          <div className="p-4 bg-yellow-200 shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
             <p className="text-lg font-semibold">遅刻</p>
             <p className="text-2xl font-bold">{stats.late + 1}人</p>
           </div>
-          <div className="p-4 bg-red-200 rounded-lg shadow">
+          <div className="p-4 bg-red-200 shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
             <p className="text-lg font-semibold">休暇</p>
             <p className="text-2xl font-bold">{stats.onLeave + 1}人</p>
           </div>
         </div>
       </div>
 
-      {/* <div className="mt-4 flex overflow-x-auto scrollbar-visible"> */}
-      <div className="flex flex-wrap justify-center mt-4">
+      <div className="flex flex-wrap justify-center mt-6 w-full max-w-6xl">
         {memberArray.concat(memberData).map((member, index) => (
           <div onClick={() => handleMemberClick(member.userId)} key={index}>
             <MemberCard
