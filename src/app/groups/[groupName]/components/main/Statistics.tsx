@@ -5,14 +5,13 @@ import { useUser } from "@/src/contexts/UserContext";
 
 const Statistic = ({ groupId }: { groupId: string }) => {
   const { user } = useUser();
-  const postArray = [
-    { imageSrc: logos.attendance, postName: "出勤" },
-    { imageSrc: logos.leave, postName: "退勤" },
-    { imageSrc: logos.vacation, postName: "休暇" },
+  const statisticArray = [
+    { imageSrc: logos.attendance, statisticName: "出勤" },
+    { imageSrc: logos.leave, statisticName: "退勤" },
+    { imageSrc: logos.vacation, statisticName: "休暇" },
   ];
 
   const handleCardClick = (statisticName: string) => {
-    console.log("handleCardClick");
     if (user && user.uid) {
       if (statisticName === "休暇") {
         recordVacation(user.uid);
@@ -80,12 +79,12 @@ const Statistic = ({ groupId }: { groupId: string }) => {
   return (
     <>
       <div className="mt-2 flex overflow-x-auto scrollbar-visible">
-        {postArray.map((post, index) => (
+        {statisticArray.map((statistic, index) => (
           <StatisticCard
             key={index}
-            ImageSrc={post.imageSrc}
-            PostName={post.postName}
-            onClick={() => handleCardClick(post.postName)}
+            ImageSrc={statistic.imageSrc}
+            StatisticName={statistic.statisticName}
+            onClick={() => handleCardClick(statistic.statisticName)}
           />
         ))}
       </div>

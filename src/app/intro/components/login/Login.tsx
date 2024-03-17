@@ -5,8 +5,8 @@ import logos from "@/public/images/group";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/src/contexts/UserContext";
 import { getDatabase, ref, set } from "firebase/database";
+import { useUser } from "@/src/contexts/UserContext";
 
 const Login: FC = () => {
   const router = useRouter();

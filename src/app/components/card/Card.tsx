@@ -1,8 +1,9 @@
-'use client';
-import Image from 'next/image';
-import Link from 'next/link';
-import {CardProps} from '@/src/interfaces/group';
-import icons from '@/public/svgs/group';
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import icons from "@/public/svgs/group";
+import { CardProps } from "@/src/interfaces/group";
 
 const Card = ({
   ImageSrc,
@@ -17,7 +18,7 @@ const Card = ({
           <div className="w-72 h-44 relative overflow-hidden">
             <Image
               src={ImageSrc}
-              alt={'Card Image'}
+              alt={"Card Image"}
               fill={true}
               sizes="(max-width: 288px), (max-hight:176px)"
               className="absolute top-0 left-0 w-full h-full object-contain"

@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import icons from "@/public/svgs/group";
-import { useEffect, useState } from "react";
 import { get, getDatabase, ref } from "firebase/database";
 
 const Notice = ({ groupId }: { groupId: string }) => {

@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import {useState, useEffect} from 'react';
-import {Card} from '../card';
-import logos from '@/public/images/group';
-import {GroupProps} from '@/src/interfaces/group';
-import {get, getDatabase, ref} from 'firebase/database';
+import { useState, useEffect } from "react";
+import logos from "@/public/images/group";
+import { get, getDatabase, ref } from "firebase/database";
+import { Card } from "../card";
+import { GroupProps } from "@/src/interfaces/group";
 
 const Favorite = () => {
   const [groups, setGroups] = useState<GroupProps[]>([]);
 
   useEffect(() => {
     const db = getDatabase();
-    const groupRef = ref(db, 'groups');
+    const groupRef = ref(db, "groups");
 
-    get(groupRef).then(snapshot => {
+    get(groupRef).then((snapshot) => {
       if (snapshot.exists()) {
         const groupData = snapshot.val();
-        const groupList = Object.keys(groupData).map(key => {
+        const groupList = Object.keys(groupData).map((key) => {
           return {
             id: key,
             name: groupData[key].name,
@@ -25,10 +25,10 @@ const Favorite = () => {
           };
         });
 
-        const favoriteGroups = groupList.filter(group => group.isFavorite);
+        const favoriteGroups = groupList.filter((group) => group.isFavorite);
         setGroups(favoriteGroups);
       } else {
-        console.log('No group data available');
+        console.log("No group data available");
       }
     });
   }, []);
@@ -38,7 +38,7 @@ const Favorite = () => {
         <Card
           key={index}
           ImageSrc={logos.freee}
-          ClassName={group.name.replace('_', ' ')}
+          ClassName={group.name.replace("_", " ")}
           ClassContent={group.description}
           FavoriteChecked={group.isFavorite}
         />

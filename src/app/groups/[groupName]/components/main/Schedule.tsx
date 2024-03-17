@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ScheduleCard } from "../card";
 import { get, getDatabase, ref } from "firebase/database";
+import { ScheduleCard } from "../card";
 
 const Schedule = ({ groupId }: { groupId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
