@@ -174,7 +174,7 @@ const Member = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center mt-6 w-full max-w-6xl">
+      <div className="flex flex-wrap justify-center mt-9 w-full max-w-7xl">
         {memberArray.concat(memberData).map((member, index) => (
           <div onClick={() => handleMemberClick(member.userId)} key={index}>
             <MemberCard
