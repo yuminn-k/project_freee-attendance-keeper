@@ -1,6 +1,6 @@
 interface StatisticCardProps {
   ImageSrc: string;
-  PostName: string;
+  StatisticName: string;
   onClick: React.MouseEventHandler<HTMLDivElement>;
 }
 
