@@ -19,12 +19,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <GroupProvider>
         <html lang="en">
           <body className={inter.className}>
-            <div className="flex h-full relative">
+            <div className="flex flex-col min-h-screen">
               <Navbar />
-              <div className="grow overflow-x-auto overflow-y-auto pl-72">
-                {children}
-                <Footer />
-              </div>
+              <div className="flex-grow overflow-auto pl-72">{children}</div>
+              <Footer className="mt-auto" />
             </div>
           </body>
         </html>
