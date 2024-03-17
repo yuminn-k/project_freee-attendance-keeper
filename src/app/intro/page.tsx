@@ -1,7 +1,9 @@
-'use client';
+"use client";
 
-import {useEffect, useState} from 'react';
-import {Login} from './components/login';
+import { useEffect, useState } from "react";
+import { Login } from "./components/login";
+import Image from "next/image";
+import group from "@/public/images/group";
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,24 +17,28 @@ const Page = () => {
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
-    const modalContainer = document.getElementById('modal-container');
+    const modalContainer = document.getElementById("modal-container");
     if (modalContainer && !modalContainer.contains(event.target as Node)) {
       onClose();
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center pr-72">
       <div className="text-5xl font-semibold text-center">
-        freee-attendance-keeper <br /> by yuminn-k
+        freee-attendance-keeper
       </div>
+
+      <div className="m-4 font-semibold text-gray-500">by yuminn-k</div>
+
+      <Image src={group.freee} width={500} height={500} alt="mainImg" />
 
       <button
         onClick={openModal}
