@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Notice, Statistics, Schedule } from ".";
 import icons from "@/public/svgs/group";
+import { Notice, Statistics, Schedule } from ".";
 
 const Main = ({ groupId }: { groupId: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,10 +16,6 @@ const Main = ({ groupId }: { groupId: string }) => {
     },
     { title: "Statistics", component: <Statistics groupId={groupId} /> },
   ];
-
-  useEffect(() => {
-    console.log(`Main: ${groupId}`);
-  }, []);
 
   return (
     <>

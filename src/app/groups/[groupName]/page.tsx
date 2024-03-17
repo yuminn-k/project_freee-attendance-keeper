@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { getDatabase, ref, get } from "firebase/database";
 import { Dashboard, TabsMapping } from "@/src/components/dashboard";
 import { Main } from "./components/main";
 import { Member } from "./components/member";
-import { getDatabase, ref, get } from "firebase/database";
 import { useGroup } from "@/src/contexts/GroupContext";
 
 const ClassMain = () => {

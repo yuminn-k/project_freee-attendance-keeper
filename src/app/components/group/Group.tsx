@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card } from "../card";
 import logos from "@/public/images/group";
 import { get, getDatabase, ref } from "firebase/database";
-import { GroupProps } from "@/src/interfaces/group";
 import { useRouter } from "next/navigation";
+import { Card } from "../card";
+import { GroupProps } from "@/src/interfaces/group";
 import { useGroup } from "@/src/contexts/GroupContext";
 
 const Group = () => {
