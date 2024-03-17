@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import footer from '@/public/svgs/footer';
+import Link from "next/link";
+import Image from "next/image";
+import footer from "@/public/svgs/footer";
 
-const Footer = () => {
+const Footer = ({ className }: { className?: string }) => {
   const urls = {
-    github: 'https://github.com/yuminn-k/project_freee-attendance-keeper',
+    github: "https://github.com/yuminn-k/project_freee-attendance-keeper",
   };
   return (
-    <div className="py-7 flex justify-center">
+    <div className={`${className} py-7 flex justify-center`}>
       <div className="w-max flex justify-center items-center">
         <div className="text-gray-500 leading-tight">
           <span className="text-sm">Copyright © yuminn-k</span>
